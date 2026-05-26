@@ -5,10 +5,16 @@
 
 import { motion, useScroll, useTransform } from 'motion/react';
 import { useState, useEffect, useRef } from 'react';
-import { Menu, X, Github, Linkedin, Twitter, Globe, GithubIcon } from 'lucide-react';
+import { Menu, X, Github, Linkedin, Twitter, Globe, GithubIcon, Shield } from 'lucide-react';
+import { AuthButton } from './Auth';
+import { Link, useLocation } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
+import { isAdmin } from '../lib/firebase';
 
 export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { user } = useAuth();
+  const location = useLocation();
   const { scrollY } = useScroll();
   const backgroundColor = useTransform(
     scrollY,
@@ -17,12 +23,15 @@ export const Navbar = () => {
   );
 
   const navItems = [
-    { name: 'Home', href: '#home' },
-    { name: 'About', href: '#about' },
-    { name: 'Skills', href: '#skills' },
-    { name: 'Projects', href: '#projects' },
-    { name: 'Contact', href: '#contact' },
+    { name: 'Home', href: '/#home' },
+    { name: 'About', href: '/#about' },
+    { name: 'Skills', href: '/#skills' },
+    { name: 'Projects', href: '/#projects' },
+    { name: 'Contact', href: '/#contact' },
+    { name: 'Reviews', href: '/#reviews' },
   ];
+
+  const isAdminUser = isAdmin(user);
 
   return (
     <motion.nav
@@ -31,16 +40,18 @@ export const Navbar = () => {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
-          <motion.div 
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="text-2xl font-display font-bold text-gradient"
-          >
-            Shashank.dev
-          </motion.div>
+          <Link to="/">
+            <motion.div 
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              className="text-2xl font-display font-bold text-gradient cursor-pointer"
+            >
+              Shashank.dev
+            </motion.div>
+          </Link>
           
-          <div className="hidden md:block">
-            <div className="ml-10 flex items-baseline space-x-8">
+          <div className="hidden md:flex items-center gap-6">
+            <div className="flex items-baseline space-x-8">
               {navItems.map((item, index) => (
                 <motion.a
                   key={item.name}
@@ -54,10 +65,26 @@ export const Navbar = () => {
                   <span className="absolute bottom-0 left-0 w-full h-0.5 bg-accent-purple scale-x-0 group-hover:scale-x-100 transition-transform origin-left" />
                 </motion.a>
               ))}
+              
+              {isAdminUser && (
+                <Link to="/admin">
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: navItems.length * 0.1 }}
+                    className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-bold transition-all ${location.pathname === '/admin' ? 'bg-accent-purple text-white shadow-lg shadow-accent-purple/20' : 'text-accent-purple hover:bg-accent-purple/10'}`}
+                  >
+                    <Shield size={16} />
+                    Admin
+                  </motion.div>
+                </Link>
+              )}
             </div>
+            <AuthButton />
           </div>
 
-          <div className="md:hidden">
+          <div className="md:hidden flex items-center gap-4">
+            <AuthButton />
             <button
               onClick={() => setIsOpen(!isOpen)}
               className="text-text-primary p-2 focus:outline-none"
@@ -85,6 +112,16 @@ export const Navbar = () => {
               {item.name}
             </a>
           ))}
+          {isAdminUser && (
+            <Link
+              to="/admin"
+              onClick={() => setIsOpen(false)}
+              className="flex items-center gap-2 text-accent-purple px-3 py-4 text-base font-bold"
+            >
+              <Shield size={20} />
+              Admin Portal
+            </Link>
+          )}
         </div>
       </motion.div>
     </motion.nav>
@@ -99,9 +136,9 @@ export const Hero = () => {
   });
   
   // Transform values based on scroll progress within the Hero section
-  const opacity = useTransform(scrollYProgress, [0, 0.4, 0.6], [0, 1, 1]);
-  const y = useTransform(scrollYProgress, [0, 0.4, 0.6], [100, 0, 0]);
-  const scale = useTransform(scrollYProgress, [0, 0.4, 0.6], [0.8, 1, 1]);
+  const opacity = useTransform(scrollYProgress, [0, 0.18, 0.45, 0.6], [0, 1, 1, 0]);
+  const y = useTransform(scrollYProgress, [0, 0.18, 0.45, 0.6], [60, 0, 0, -60]);
+  const scale = useTransform(scrollYProgress, [0, 0.18, 0.45, 0.6], [0.9, 1, 1, 0.9]);
 
   return (
     <section id="home" ref={containerRef} className="relative h-[200vh]">
@@ -163,14 +200,15 @@ export const Hero = () => {
 
             <div className="mt-16 flex items-center gap-8">
               {[
-                { icon: GithubIcon, href: "#" },
-                { icon: Linkedin, href: "#" },
+                { icon: Linkedin, href: "https://www.linkedin.com/in/shashank-nayal-b993953b1/" },
                 { icon: Twitter, href: "#" },
                 { icon: Globe, href: "#" },
               ].map((social, idx) => (
                 <a 
                   key={idx} 
                   href={social.href}
+                  target={social.href !== '#' ? "_blank" : undefined}
+                  rel={social.href !== '#' ? "noopener noreferrer" : undefined}
                   className="text-text-secondary hover:text-accent-purple transition-colors transform hover:scale-110"
                 >
                   <social.icon size={24} />

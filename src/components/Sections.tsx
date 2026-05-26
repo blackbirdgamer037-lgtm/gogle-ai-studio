@@ -23,7 +23,7 @@ export const Skills = () => {
             viewport={{ once: true }}
             className="text-4xl md:text-5xl font-display font-bold mb-4"
           >
-            Building Digital <span className="text-gradient">Experiences</span>
+            Build <span className="text-gradient">Digital Experiences</span> by Stack Studio
           </motion.h2>
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
@@ -77,18 +77,9 @@ export const Skills = () => {
             <h3 className="text-2xl md:text-3xl font-display font-bold mb-4">
               We also craft <span className="text-accent-purple">professional 3D websites</span> in a futuristic way.
             </h3>
-            <p className="text-text-secondary mb-8 max-w-2xl mx-auto">
+            <p className="text-text-secondary mb-0 max-w-2xl mx-auto">
               Our 3D immersive experiences are designed to captivate your audience and leave a lasting impression of innovation and professional excellence.
             </p>
-            <motion.a 
-              href="#projects" 
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="inline-flex items-center gap-3 px-10 py-4 bg-linear-to-r from-accent-purple to-accent-blue rounded-full text-white font-bold glow-purple transition-all shadow-xl shadow-accent-purple/20"
-            >
-              <LucideIcons.Box size={20} />
-              View 3D Project
-            </motion.a>
           </div>
         </motion.div>
       </div>
@@ -108,7 +99,7 @@ export const Projects = () => {
               viewport={{ once: true }}
               className="text-4xl md:text-5xl font-display font-bold mb-4"
             >
-              Featured <span className="text-gradient">Projects</span>
+              Visit Our <span className="text-gradient">Demo Website</span>
             </motion.h2>
             <motion.p 
               initial={{ opacity: 0, x: -20 }}
@@ -166,12 +157,9 @@ export const Projects = () => {
                   {project.description}
                 </p>
                 <div className="flex items-center gap-4">
-                  <a href={project.githubUrl} className="p-2 text-text-secondary hover:text-white transition-colors">
-                    <LucideIcons.Github size={20} />
-                  </a>
-                  <a href={project.liveUrl} className="flex items-center gap-2 px-4 py-2 bg-white/5 hover:bg-white/10 rounded-lg text-sm font-medium transition-colors">
+                  <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-4 py-2 bg-white/5 hover:bg-white/10 rounded-lg text-sm font-medium transition-colors">
                     <LucideIcons.ExternalLink size={16} />
-                    Live Demo
+                    {project.buttonText || 'Live Demo'}
                   </a>
                 </div>
               </div>

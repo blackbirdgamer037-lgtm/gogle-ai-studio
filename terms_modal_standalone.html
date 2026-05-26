@@ -1,0 +1,698 @@
+<!--
+  ========================================================================
+  STANDALONE TERMS & CONDITIONS MODAL POPUP
+  ========================================================================
+  Designed to match:
+  - Background Theme: Dark Deep (#050505) & Glass Panel (#0D0D0D)
+  - Color Accents: Vibrant Purple (#8B5CF6) & Deep Indigo
+  - Fonts: Inter & Space Grotesk
+  - Border Radius: Modern rounded-2xl (1rem / 16px) style
+
+  How to use:
+  1. Paste this entire file code into your index.html/landing page.
+  2. Modify the "VARIABLES" section below in the CSS to adjust colors and fonts.
+  3. Replace the text in the "SCROLLABLE TEXT CONTENT" section below with your own.
+  ========================================================================
+-->
+
+<div id="terms-modal-container" style="display: none;">
+  <!-- Backdrop Overlay -->
+  <div id="terms-backdrop"></div>
+
+  <!-- Modal Box -->
+  <div id="terms-modal-card">
+    
+    <!-- Modal Header -->
+    <div class="terms-modal-header">
+      <div class="terms-icon-wrapper">
+        <!-- SVG Secure Shield Alert icon -->
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="terms-svg"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+      </div>
+      <div>
+        <h2 class="terms-title">COMPLIANCE & LIABILITY POLICY</h2>
+        <p class="terms-subtitle">Agreement Required Before Proceeding</p>
+      </div>
+    </div>
+
+    <!-- Decline Warning Screen (Starts hidden, shown if Decline is clicked) -->
+    <div id="terms-decline-screen" class="terms-hidden">
+      <div class="terms-alert-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+      </div>
+      <h3 class="terms-decline-headline">Access Restricted</h3>
+      <p class="terms-decline-paragraph">
+        You must accept the terms & conditions and liability limitation policy to use this site. 
+        This ensures mutual legal protection for development, consultancy, and cybersecurity engagements.
+      </p>
+      <button id="terms-retry-btn" class="terms-btn-secondary">Review Terms Again</button>
+    </div>
+
+    <!-- Main Terms Scroll & Action Panel -->
+    <div id="terms-main-panel">
+      <!-- Scrollable Area -->
+      <div id="terms-scroll-body">
+        
+        <!-- Document Meta Badge -->
+        <div class="terms-doc-badge">
+          <p class="badge-title">PROFESSIONAL TERMS, CONDITIONS & LIABILITY LIMITATION POLICY</p>
+          <p class="badge-sub">Web Developer & Cybersecurity Professional Services</p>
+          <hr class="badge-divider">
+          <p class="badge-date">Effective Date: May 17, 2026</p>
+        </div>
+
+        <!-- TERMS SECTIONS START (Paste your terms text below) -->
+        
+        <div class="terms-section">
+          <h4>1. Introduction & Scope of Agreement</h4>
+          <p>
+            This document constitutes a legally binding agreement between the professional web developer and cybersecurity consultant (hereinafter referred to as "the Professional," "Service Provider," or "I") and any individual, business, or organization (hereinafter "Client") that engages the Professional's services.
+            By engaging the Professional's services — whether verbally, in writing, or through payment — the Client acknowledges having read, understood, and agreed to all terms stated herein.
+          </p>
+        </div>
+
+        <div class="terms-section">
+          <h4>2. Nature of Professional Services</h4>
+          <p>The Professional provides the following categories of services:</p>
+          <ul>
+            <li>Website design, development, and deployment</li>
+            <li>Front-end and back-end web application development</li>
+            <li>Cybersecurity assessments, vulnerability testing, and penetration testing (with explicit written authorization)</li>
+            <li>Security consulting, threat modeling, and risk assessment</li>
+            <li>Code review and security auditing</li>
+            <li>IT security advisory and recommendations</li>
+          </ul>
+          <p>
+            All services are rendered in good faith, based on industry-standard best practices, and the Professional's reasonable professional judgment at the time of delivery.
+          </p>
+        </div>
+
+        <div class="terms-section">
+          <h4>3. Limitation of Liability</h4>
+          <div class="terms-sub-section">
+            <h5>3.1 General Limitation</h5>
+            <p>
+              The Professional shall NOT be held liable for any direct, indirect, incidental, consequential, special, or exemplary damages arising from the use, misuse, or inability to use the delivered work, including but not limited to loss of revenue, profits, or business opportunities, data loss, third-party breaches, or failures of hosting providers.
+            </p>
+          </div>
+          <div class="terms-sub-section">
+            <h5>3.2 Cybersecurity Services — Specific Limitation</h5>
+            <p>
+              All security testing is conducted only on systems for which the Client has provided explicit written authorization. The Professional cannot guarantee that all vulnerabilities will be discovered. A security assessment reflects the state of the system at the time of testing only. Safety of findings and implementation is solely Client-side responsibility.
+            </p>
+          </div>
+          <div class="terms-sub-section">
+            <h5>3.3 Cap on Liability</h5>
+            <p>
+              In any case where liability is established, the Professional's total cumulative liability to the Client shall not exceed the total fees paid by the Client for the specific service that gave rise to the claim, within the three (3) months preceding the incident.
+            </p>
+          </div>
+        </div>
+
+        <div class="terms-section">
+          <h4>4. Client Responsibilities & Indemnification</h4>
+          <p>
+            The Client agrees to check and warrant legal ownership and authorization over all domains, codebases, and environments. You will not use tools or deliverables for unauthorized or malicious acts. The Client agrees to indemnify and hold harmless the Professional against any legal liabilities resulting from misuse, compliance violations, or unauthorized modifications.
+          </p>
+        </div>
+
+        <div class="terms-section">
+          <h4>5. Authorized Use of Cybersecurity Knowledge</h4>
+          <p>
+            The Professional possesses advanced knowledge in cybersecurity, ethical hacking, and vulnerability research. This knowledge is used exclusively for authorized assessments, defense research, and proactive system hardening. Unlawful activities under CFAA, GDPR, or related legislations are strictly prohibited. Safe harbor conditions are recognized strictly under written authorizations.
+          </p>
+        </div>
+
+        <div class="terms-section">
+          <h4>6. Intellectual Property</h4>
+          <p>
+            Unless otherwise agreed in writing, client code and deliverables become the Client's property upon complete payment. The Professional retains the right to reference the project in portfolios anonymously. Pre-existing tools and libraries remain the Professional's exclusive property. Open-source components used in deliverables are subject to their respective licenses.
+          </p>
+        </div>
+
+        <div class="terms-section">
+          <h4>7. Confidentiality</h4>
+          <p>
+            All systems, assessments, source codes, and credentials remain under strict non-disclosure terms. Findings shall be delivered securely and directly only to the verified counterpart.
+          </p>
+        </div>
+
+        <div class="terms-section">
+          <h4>8. Disclaimer of Warranties</h4>
+          <p>
+            All services are provided on an "AS IS" and "AS AVAILABLE" basis. No warranties are offered regarding fitness for a particular purpose or guaranteed elimination of all potential vulnerabilities.
+          </p>
+        </div>
+
+        <div class="terms-section">
+          <h4>9. Governing Law & Dispute Resolution</h4>
+          <p>
+            This agreement is governed by the laws of the jurisdiction in which the Professional operates. Any disputes shall first be mediated through good-faith negotiation, then binding arbitration if required.
+          </p>
+        </div>
+
+        <div class="terms-section">
+          <h4>10. Amendments & Entire Agreement</h4>
+          <p>
+            This represents the complete agreement regarding liability and professional conduct. It supersedes all prior verbal or written agreements.
+          </p>
+        </div>
+
+        <!-- TERMS SECTIONS END -->
+         
+        <!-- Sticky Scroll Down Alert Tip -->
+        <div id="terms-scroll-tip">
+          <span class="tip-pill">↓ Scroll to bottom to unlock agreement</span>
+        </div>
+      </div>
+
+      <!-- Consent Footer -->
+      <div class="terms-modal-footer">
+        <!-- Checkbox -->
+        <label class="terms-checkbox-label">
+          <input type="checkbox" id="terms-checkbox" disabled>
+          <span class="terms-checkbox-text">
+            I have read and agree to the Terms & Conditions and Privacy Policy
+          </span>
+        </label>
+
+        <!-- Buttons -->
+        <div class="terms-btn-group">
+          <button type="button" id="terms-decline-btn" class="terms-btn-secondary">Decline</button>
+          <button type="button" id="terms-agree-btn" class="terms-btn-primary" disabled>
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 4px; display: inline-block; vertical-align: middle;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            I Agree
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<style>
+  /* ========================================================================
+     THEME VARIABLES (Change colors & styling here)
+     ======================================================================== */
+  :root {
+    --terms-primary-color: #8B5CF6;       /* Accent purple */
+    --terms-primary-hover: #7C3AED;       /* Accent purple hover state */
+    --terms-bg-color: #050505;            /* Solid dark backend */
+    --terms-card-bg: #0D0D0D;             /* Solid/transparent panel color */
+    --terms-border-color: rgba(255,255,255,0.1); 
+    --terms-text-primary: #F5F5F5;        /* Light text */
+    --terms-text-secondary: #A1A1AA;      /* Secondary muted text */
+    --terms-text-muted: #71717A;          /* Greyed text */
+    --terms-radius: 16px;                 /* Smooth corner styling */
+    --terms-font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+    --terms-font-display: 'Space Grotesk', system-ui, sans-serif;
+  }
+
+  /* ========================================================================
+     MODAL STYLES (Clean, modern, responsive)
+     ======================================================================== */
+  #terms-modal-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999999;
+    font-family: var(--terms-font-sans);
+    padding: 16px;
+    box-sizing: border-box;
+  }
+
+  #terms-modal-container *, #terms-modal-container *::before, #terms-modal-container *::after {
+    box-sizing: border-box;
+  }
+
+  /* Backdrop filter screen overlay */
+  #terms-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 1;
+  }
+
+  /* Core Card Container */
+  #terms-modal-card {
+    position: relative;
+    width: 100%;
+    max-width: 640px;
+    max-height: 85vh;
+    background-color: var(--terms-card-bg);
+    border: 1px solid var(--terms-border-color);
+    border-radius: var(--terms-radius);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 20px 50px rgba(139, 92, 246, 0.15);
+    z-index: 2;
+    animation: termsFadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  /* Smooth Entrance Animation */
+  @keyframes termsFadeIn {
+    from {
+      opacity: 0;
+      transform: scale(0.95) translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+  }
+
+  /* Modal Title Header */
+  .terms-modal-header {
+    padding: 24px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    background: linear-gradient(90deg, rgba(139, 92, 246, 0.1) 0%, rgba(0,0,0,0) 100%);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .terms-icon-wrapper {
+    background: rgba(139, 92, 246, 0.15);
+    color: var(--terms-primary-color);
+    border-radius: calc(var(--terms-radius) - 4px);
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .terms-title {
+    margin: 0;
+    padding: 0;
+    font-size: 1.2rem;
+    font-weight: 700;
+    font-family: var(--terms-font-display);
+    color: var(--terms-text-primary);
+    letter-spacing: -0.025em;
+  }
+
+  .terms-subtitle {
+    margin: 2px 0 0 0;
+    padding: 0;
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--terms-primary-color);
+    font-family: monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  /* Scrollable Text Body Container */
+  #terms-scroll-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 24px;
+    background-color: rgba(255, 255, 255, 0.01);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    scroll-behavior: smooth;
+    position: relative;
+  }
+
+  /* CSS Scrollbar for Webkit Browsers */
+  #terms-scroll-body::-webkit-scrollbar {
+    width: 6px;
+  }
+  #terms-scroll-body::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  #terms-scroll-body::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 9px;
+  }
+  #terms-scroll-body::-webkit-scrollbar-thumb:hover {
+    background: var(--terms-primary-color);
+  }
+
+  /* Info document intro badge */
+  .terms-doc-badge {
+    background: rgba(255,255,255, 0.03);
+    border: 1px solid rgba(255,255,255, 0.05);
+    border-radius: 12px;
+    padding: 18px;
+    margin-bottom: 24px;
+    text-align: center;
+  }
+
+  .badge-title {
+    margin: 0 0 4px 0;
+    font-weight: 600;
+    font-size: 12px;
+    color: #FFFFFF;
+    line-height: 1.4;
+  }
+
+  .badge-sub {
+    margin: 0;
+    font-size: 10px;
+    color: var(--terms-text-muted);
+    font-family: monospace;
+    text-transform: uppercase;
+  }
+
+  .badge-divider {
+    border: 0;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.08);
+    margin: 12.5px 0;
+  }
+
+  .badge-date {
+    margin: 0;
+    font-size: 11px;
+    font-family: monospace;
+    color: var(--terms-text-secondary);
+  }
+
+  /* Individual Policy text divisions */
+  .terms-section {
+    margin-bottom: 24px;
+  }
+
+  .terms-section h4 {
+    margin: 0 0 8px 0;
+    color: var(--terms-primary-color);
+    font-family: var(--terms-font-display);
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .terms-section p {
+    margin: 0 0 10px 0;
+    font-size: 0.775rem;
+    color: var(--terms-text-secondary);
+    line-height: 1.6;
+  }
+
+  .terms-section ul {
+    margin: 0 0 12px 0;
+    padding-left: 18px;
+    list-style-type: square;
+    color: var(--terms-text-secondary);
+  }
+
+  .terms-section li {
+    font-size: 0.775rem;
+    line-height: 1.6;
+    margin-bottom: 6px;
+  }
+
+  .terms-sub-section {
+    margin-top: 14px;
+    padding-left: 8px;
+    border-left: 2px solid rgba(139, 92, 246, 0.25);
+  }
+
+  .terms-sub-section h5 {
+    margin: 0 0 4px 0;
+    font-weight: 600;
+    color: rgba(255,255,255,0.9);
+    font-size: 11.5px;
+  }
+
+  /* Scrolling tip notice indicator */
+  #terms-scroll-tip {
+    position: sticky;
+    bottom: -1px;
+    left: 0;
+    right: 0;
+    padding: 10px 0;
+    background: linear-gradient(to top, var(--terms-card-bg) 0%, rgba(0,0,0,0) 100%);
+    text-align: center;
+    transition: opacity 0.3s ease;
+  }
+
+  .tip-pill {
+    font-size: 10px;
+    font-family: monospace;
+    background: rgba(13, 13, 13, 0.95);
+    border: 1px solid rgba(139, 92, 246, 0.3);
+    color: var(--terms-primary-color);
+    padding: 4px 12px;
+    border-radius: 50px;
+    display: inline-block;
+    animation: termsPulse 1.5s infinite;
+  }
+
+  @keyframes termsPulse {
+    0%, 100% { transform: scale(1); opacity: 0.95; }
+    50% { transform: scale(1.02); opacity: 1; }
+  }
+
+  /* Consent Interaction Footer */
+  .terms-modal-footer {
+    padding: 24px;
+    background-color: rgba(9, 9, 9, 0.9);
+    border-top: 1px solid rgba(255,255,255,0.05);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  /* Checkbox wrapper custom label */
+  .terms-checkbox-label {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    cursor: pointer;
+    font-size: 0.775rem;
+    color: var(--terms-text-secondary);
+    user-select: none;
+    line-height: 1.4;
+  }
+
+  .terms-checkbox-label:hover {
+    color: #FFFFFF;
+  }
+
+  #terms-checkbox {
+    margin-top: 2px;
+    width: 15px;
+    height: 15px;
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 4px;
+    accent-color: var(--terms-primary-color);
+    cursor: pointer;
+  }
+
+  #terms-checkbox:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  /* Action buttons layout */
+  .terms-btn-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .terms-btn-primary, .terms-btn-secondary {
+    padding: 12px 18px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .terms-btn-primary {
+    background-color: var(--terms-primary-color);
+    border: none;
+    color: #FFFFFF;
+    box-shadow: 0 4px 14px rgba(139, 92, 246, 0.25);
+  }
+
+  .terms-btn-primary:hover:not(:disabled) {
+    background-color: var(--terms-primary-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(139, 92, 246, 0.35);
+  }
+
+  .terms-btn-primary:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+
+  .terms-btn-secondary {
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--terms-text-secondary);
+  }
+
+  .terms-btn-secondary:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #FFFFFF;
+  }
+
+  #terms-decline-btn:hover {
+    color: #F87171; /* Accent red hover feedback for decline buttons */
+    border-color: rgba(248, 113, 113, 0.2);
+  }
+
+  /* ========================================================================
+     DECLINED SCREEN OVERLAY STYLES
+     ======================================================================== */
+  #terms-decline-screen {
+    flex: 1;
+    padding: 48px 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background-color: var(--terms-bg-color);
+  }
+
+  .terms-alert-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background-color: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.2);
+    color: #EF4444;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 24px;
+    animation: termsShake 0.4s ease forwards;
+  }
+
+  @keyframes termsShake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-4px); }
+    75% { transform: translateX(4px); }
+  }
+
+  .terms-decline-headline {
+    margin: 0 0 12px 0;
+    color: #FFFFFF;
+    font-family: var(--terms-font-display);
+    font-weight: 700;
+    font-size: 1.15rem;
+  }
+
+  .terms-decline-paragraph {
+    margin: 0 0 32px 0;
+    font-size: 13px;
+    color: var(--terms-text-secondary);
+    max-width: 380px;
+    line-height: 1.6;
+  }
+
+  /* Helper states */
+  .terms-hidden {
+    display: none !important;
+  }
+
+  /* Responsive layouts scale down styling for small mobiles */
+  @media (max-width: 480px) {
+    #terms-modal-card {
+      max-height: 95vh;
+    }
+    .terms-btn-group {
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+    #terms-decline-btn {
+      order: 2; /* Move decline btn to the bottom on narrow devices */
+    }
+  }
+</style>
+
+<script>
+  /**
+   * ========================================================================
+   * CORE TERMS MODAL CONTROLLER EVENT LISTENERS
+   * ========================================================================
+   */
+  document.addEventListener("DOMContentLoaded", function() {
+    const modalWrapper = document.getElementById("terms-modal-container");
+    const scrollBox = document.getElementById("terms-scroll-body");
+    const scrollTip = document.getElementById("terms-scroll-tip");
+    const acceptCheckbox = document.getElementById("terms-checkbox");
+    const agreeBtn = document.getElementById("terms-agree-btn");
+    const declineBtn = document.getElementById("terms-decline-btn");
+    const declineScreen = document.getElementById("terms-decline-screen");
+    const mainPanel = document.getElementById("terms-main-panel");
+    const retryBtn = document.getElementById("terms-retry-btn");
+
+    // Check if user has already accepted the terms in this browser storage/session
+    const hasAccepted = localStorage.getItem("terms_accepted_v1");
+
+    if (!hasAccepted) {
+      // Auto triggers on load
+      modalWrapper.style.display = "flex";
+      // Prevent interactions behind by locking document body scrolling
+      document.body.style.overflow = "hidden";
+    }
+
+    // Scroll reader lock detection
+    scrollBox.addEventListener("scroll", function() {
+      // Allow a buffer buffer range to register bottom
+      const scrolledToBottom = scrollBox.scrollHeight - scrollBox.scrollTop <= scrollBox.clientHeight + 40;
+      
+      if (scrolledToBottom) {
+        acceptCheckbox.removeAttribute("disabled");
+        scrollTip.style.opacity = "0";
+        setTimeout(() => scrollTip.classList.add("terms-hidden"), 300);
+      }
+    });
+
+    // Toggle agree button readiness
+    acceptCheckbox.addEventListener("change", function(e) {
+      if (e.target.checked) {
+        agreeBtn.removeAttribute("disabled");
+      } else {
+        agreeBtn.setAttribute("disabled", "true");
+      }
+    });
+
+    // Close and agree consent handler
+    agreeBtn.addEventListener("click", function() {
+      if (acceptCheckbox.checked) {
+        localStorage.setItem("terms_accepted_v1", "true");
+        modalWrapper.style.display = "none";
+        document.body.style.overflow = "unset";
+      }
+    });
+
+    // Decline layout triggers
+    declineBtn.addEventListener("click", function() {
+      mainPanel.classList.add("terms-hidden");
+      declineScreen.classList.remove("terms-hidden");
+    });
+
+    // Retry recovery step
+    retryBtn.addEventListener("click", function() {
+      declineScreen.classList.add("terms-hidden");
+      mainPanel.classList.remove("terms-hidden");
+      // Reset checkbox state
+      acceptCheckbox.checked = false;
+      agreeBtn.setAttribute("disabled", "true");
+    });
+  });
+</script>

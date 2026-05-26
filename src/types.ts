@@ -12,6 +12,7 @@ export interface Project {
   githubUrl: string;
   liveUrl: string;
   category: string;
+  buttonText?: string;
 }
 
 export interface Skill {
@@ -27,3 +28,14 @@ export interface Experience {
   period: string;
   description: string;
 }
+
+export interface Review {
+  id?: string;
+  userId: string;
+  userName: string;
+  userPhoto?: string | null;
+  rating: number;
+  comment: string;
+  createdAt: any;
+}
+
