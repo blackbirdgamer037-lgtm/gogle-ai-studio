@@ -1,13 +1,24 @@
-import React, { useState } from 'react';
-import { motion } from 'motion/react';
-import { signOut } from 'firebase/auth';
-import { auth, signInWithGoogle } from '../lib/firebase';
+import React, { useState, useRef, useEffect } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
+import { signInWithGoogle } from '../lib/firebase';
 import { LogIn, LogOut } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 
 export const AuthButton = () => {
-  const { user, triggerAuthError } = useAuth();
+  const { user, triggerAuthError, logout } = useAuth();
   const [isLoggingIn, setIsLoggingIn] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleOutsideClick = (event: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setMenuOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleOutsideClick);
+    return () => document.removeEventListener('mousedown', handleOutsideClick);
+  }, []);
 
   const handleLogin = async () => {
     if (isLoggingIn) return;
@@ -24,36 +35,46 @@ export const AuthButton = () => {
   };
 
   const handleLogout = async () => {
-    try {
-      localStorage.removeItem('simulated_guest_user');
-      await signOut(auth);
-    } catch (error) {
-      console.error('Logout failed:', error);
-    }
+    setMenuOpen(false);
+    await logout();
   };
 
   if (user) {
     return (
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-4" ref={menuRef}>
         <div className="hidden md:flex flex-col items-end">
           <span className="text-xs text-text-secondary font-medium">Hello,</span>
           <span className="text-sm text-white font-bold max-w-[150px] truncate">{user.displayName || 'Developer'}</span>
         </div>
-        <div className="relative group">
+        <div className="relative">
            <img 
             src={user.photoURL || `https://api.dicebear.com/7.x/avataaars/svg?seed=${user.uid}`} 
             alt="Profile" 
-            className="w-10 h-10 rounded-full border-2 border-accent-purple cursor-pointer"
+            onClick={() => setMenuOpen(!menuOpen)}
+            className="w-10 h-10 rounded-full border-2 border-accent-purple cursor-pointer hover:scale-105 active:scale-95 transition-transform"
           />
-          <div className="absolute top-full right-0 mt-2 w-48 glass rounded-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all p-2 z-50">
-            <button 
-              onClick={handleLogout}
-              className="w-full flex items-center gap-2 px-4 py-2 text-sm text-text-secondary hover:text-white hover:bg-white/5 rounded-lg transition-colors"
-            >
-              <LogOut size={16} />
-              Sign Out
-            </button>
-          </div>
+          <AnimatePresence>
+            {menuOpen && (
+              <motion.div 
+                initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                className="absolute top-full right-0 mt-3 w-48 glass rounded-xl border border-white/10 shadow-2xl bg-background-deep/95 backdrop-blur-md p-2 z-50 space-y-1"
+              >
+                <div className="px-3 py-1.5 border-b border-white/5 mb-1 text-left">
+                  <p className="text-[11px] font-bold text-accent-purple uppercase tracking-wider font-mono">My Account</p>
+                  <p className="text-xs font-semibold text-white truncate max-w-[150px] mt-0.5">{user.displayName || 'Developer'}</p>
+                </div>
+                <button 
+                  onClick={handleLogout}
+                  className="w-full flex items-center gap-2.5 px-3 py-2 text-sm text-text-secondary hover:text-white hover:bg-white/5 rounded-lg transition-all text-left"
+                >
+                  <LogOut size={16} className="text-red-400 shrink-0" />
+                  <span className="font-semibold text-xs text-white">Sign Out</span>
+                </button>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </div>
     );

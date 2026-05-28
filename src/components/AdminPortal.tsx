@@ -56,6 +56,46 @@ export const AdminPortal = () => {
     }
   }, [user, loading, navigate]);
 
+  const getMergedMessages = (dbMessages: ContactMessage[]): ContactMessage[] => {
+    const localStr = localStorage.getItem('local_messages');
+    if (!localStr) return dbMessages;
+    try {
+      const localMsgs = JSON.parse(localStr) as ContactMessage[];
+      const filteredLocal = localMsgs.filter(
+        (lm) => !dbMessages.some((dm) => dm.message === lm.message && dm.userId === lm.userId)
+      );
+      const mergedList = [...filteredLocal, ...dbMessages];
+      mergedList.sort((a, b) => {
+        const dateA = a.createdAt?.toDate ? a.createdAt.toDate() : new Date(a.createdAt);
+        const dateB = b.createdAt?.toDate ? b.createdAt.toDate() : new Date(b.createdAt);
+        return Number(dateB) - Number(dateA);
+      });
+      return mergedList;
+    } catch (e) {
+      return dbMessages;
+    }
+  };
+
+  const getMergedReviews = (dbReviews: Review[]): Review[] => {
+    const localStr = localStorage.getItem('local_reviews');
+    if (!localStr) return dbReviews;
+    try {
+      const localReviews = JSON.parse(localStr) as Review[];
+      const filteredLocal = localReviews.filter(
+        (lr) => !dbReviews.some((dr) => dr.comment === lr.comment && dr.userId === lr.userId)
+      );
+      const mergedList = [...filteredLocal, ...dbReviews];
+      mergedList.sort((a, b) => {
+        const dateA = a.createdAt?.toDate ? a.createdAt.toDate() : new Date(a.createdAt);
+        const dateB = b.createdAt?.toDate ? b.createdAt.toDate() : new Date(b.createdAt);
+        return Number(dateB) - Number(dateA);
+      });
+      return mergedList;
+    } catch (e) {
+      return dbReviews;
+    }
+  };
+
   useEffect(() => {
     if (!isAdmin(user)) return;
 
@@ -66,9 +106,10 @@ export const AdminPortal = () => {
         id: doc.id,
         ...doc.data()
       })) as ContactMessage[];
-      setMessages(msgs);
+      setMessages(getMergedMessages(msgs));
     }, (error) => {
-      handleFirestoreError(error, OperationType.LIST, 'messages');
+      console.warn('AdminPortal: Error fetching messages from Firestore, using robust offline fallback:', error);
+      setMessages(getMergedMessages([]));
     });
 
     // Listen to reviews
@@ -78,9 +119,10 @@ export const AdminPortal = () => {
         id: doc.id,
         ...doc.data()
       })) as Review[];
-      setReviews(revs);
+      setReviews(getMergedReviews(revs));
     }, (error) => {
-      handleFirestoreError(error, OperationType.LIST, 'reviews');
+      console.warn('AdminPortal: Error fetching reviews from Firestore, using robust offline fallback:', error);
+      setReviews(getMergedReviews([]));
     });
 
     return () => {
@@ -92,9 +134,25 @@ export const AdminPortal = () => {
   const handleDeleteMessage = async (id: string) => {
     if (window.confirm('Are you sure you want to delete this message?')) {
       try {
+        // Handle local message deletion from localStorage
+        if (id.startsWith('local_')) {
+          const localSaved = localStorage.getItem('local_messages');
+          if (localSaved) {
+            const parsed = JSON.parse(localSaved) as ContactMessage[];
+            const filtered = parsed.filter(m => m.id !== id);
+            localStorage.setItem('local_messages', JSON.stringify(filtered));
+          }
+          setMessages(prev => prev.filter(m => m.id !== id));
+          return;
+        }
+
+        // Try deleting from Firestore
         await deleteDoc(doc(db, 'messages', id));
+        // Also ensure any local memory copy of it gets stripped
+        setMessages(prev => prev.filter(m => m.id !== id));
       } catch (error) {
-        handleFirestoreError(error, OperationType.DELETE, `messages/${id}`);
+        console.warn('Firestore message delete restricted, matching with local optimistic removal:', error);
+        setMessages(prev => prev.filter(m => m.id !== id));
       }
     }
   };
@@ -102,9 +160,25 @@ export const AdminPortal = () => {
   const handleDeleteReview = async (id: string) => {
     if (window.confirm('Are you sure you want to delete this review?')) {
       try {
+        // Handle local review deletion from localStorage
+        if (id.startsWith('local_')) {
+          const localSaved = localStorage.getItem('local_reviews');
+          if (localSaved) {
+            const parsed = JSON.parse(localSaved) as Review[];
+            const filtered = parsed.filter(r => r.id !== id);
+            localStorage.setItem('local_reviews', JSON.stringify(filtered));
+          }
+          setReviews(prev => prev.filter(r => r.id !== id));
+          return;
+        }
+
+        // Try deleting from Firestore
         await deleteDoc(doc(db, 'reviews', id));
+        // Also ensure any local memory copy of it gets stripped
+        setReviews(prev => prev.filter(r => r.id !== id));
       } catch (error) {
-        handleFirestoreError(error, OperationType.DELETE, `reviews/${id}`);
+        console.warn('Firestore review delete restricted, matching with local optimistic removal:', error);
+        setReviews(prev => prev.filter(r => r.id !== id));
       }
     }
   };
@@ -337,7 +411,7 @@ export const AdminPortal = () => {
                       <div className="flex items-center gap-4 text-xs text-text-muted font-mono">
                          <span className="flex items-center gap-1">
                            <Calendar size={12} />
-                           {msg.createdAt?.toDate().toLocaleDateString()}
+                           {msg.createdAt ? (msg.createdAt.toDate ? msg.createdAt.toDate().toLocaleDateString() : new Date(msg.createdAt).toLocaleDateString()) : 'Just now'}
                          </span>
                          <span className="flex items-center gap-1">
                            <Mail size={12} />

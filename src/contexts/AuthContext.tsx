@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { User, onAuthStateChanged, getRedirectResult } from 'firebase/auth';
+import { User, onAuthStateChanged, getRedirectResult, signOut } from 'firebase/auth';
 import { auth, signInAsGuest } from '../lib/firebase';
 import { motion, AnimatePresence } from 'motion/react';
 import { AlertCircle, X, ExternalLink } from 'lucide-react';
@@ -11,6 +11,7 @@ interface AuthContextType {
   triggerAuthError: (error: any) => void;
   clearAuthError: () => void;
   loginAsGuest: (displayName?: string) => Promise<User | null>;
+  logout: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType>({ 
@@ -20,6 +21,7 @@ const AuthContext = createContext<AuthContextType>({
   triggerAuthError: () => {},
   clearAuthError: () => {},
   loginAsGuest: async () => null,
+  logout: async () => {},
 });
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -119,8 +121,19 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
+  const logout = async () => {
+    try {
+      localStorage.removeItem('simulated_guest_user');
+      await signOut(auth);
+    } catch (error) {
+      console.error('Logout error:', error);
+    } finally {
+      setUser(null);
+    }
+  };
+
   return (
-    <AuthContext.Provider value={{ user, loading, authError, triggerAuthError, clearAuthError, loginAsGuest }}>
+    <AuthContext.Provider value={{ user, loading, authError, triggerAuthError, clearAuthError, loginAsGuest, logout }}>
       {!loading && children}
 
       {/* Floating Auth Notification Overlay */}
