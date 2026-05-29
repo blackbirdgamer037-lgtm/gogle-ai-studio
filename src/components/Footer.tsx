@@ -71,7 +71,17 @@ export const Contact = () => {
   ];
 
   const [tierIndex, setTierIndex] = useState(1); // Default to Essential (15k)
+  const [animateTrigger, setAnimateTrigger] = useState(false);
+  const [isButtonPurple, setIsButtonPurple] = useState(true); // Purple by default so it has color initially
   const currentTier = TIERS[tierIndex];
+
+  const handleSelectPlan = () => {
+    setAnimateTrigger(true);
+    setIsButtonPurple(false);
+    setTimeout(() => {
+      setAnimateTrigger(false);
+    }, 600);
+  };
 
   const formatCurrency = (val: number) => {
     return new Intl.NumberFormat('en-IN', {
@@ -245,7 +255,23 @@ export const Contact = () => {
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-text-secondary mb-2">Select Your Plan & Budget</label>
-                    <div className="glass-card p-6 rounded-xl border border-white/10 mb-2 overflow-visible">
+                    <motion.div 
+                      animate={animateTrigger ? {
+                        scale: [1, 1.015, 0.995, 1],
+                        borderColor: [
+                          'rgba(255, 255, 255, 0.1)',
+                          'var(--color-accent-purple)',
+                          'rgba(255, 255, 255, 0.1)'
+                        ],
+                        boxShadow: [
+                          '0 0 0 rgba(168, 85, 247, 0)',
+                          '0 0 15px rgba(168, 85, 247, 0.15)',
+                          '0 0 0 rgba(168, 85, 247, 0)'
+                        ]
+                      } : {}}
+                      transition={{ duration: 0.6, ease: "easeInOut" }}
+                      className="glass-card p-6 rounded-xl border border-white/10 mb-2 overflow-visible"
+                    >
                       <div className="relative mb-12 pt-10">
                         {/* Floating Price Tooltip */}
                         <div 
@@ -265,8 +291,11 @@ export const Contact = () => {
                           max={TIERS.length - 1}
                           step={1}
                           value={tierIndex}
-                          onChange={(e) => setTierIndex(parseInt(e.target.value))}
-                          className="w-full h-2 bg-white/10 rounded-full appearance-none cursor-pointer accent-accent-purple hover:accent-accent-purple/80 transition-all relative z-10"
+                          onChange={(e) => {
+                            setTierIndex(parseInt(e.target.value));
+                            setIsButtonPurple(true);
+                          }}
+                          className="w-full h-2 bg-white/10 rounded-full appearance-none cursor-pointer accent-accent-purple hover:accent-purple/80 transition-all relative z-10"
                           style={{
                             background: `linear-gradient(to right, var(--color-accent-purple) 0%, var(--color-accent-purple) ${percentage}%, rgba(255, 255, 255, 0.1) ${percentage}%, rgba(255, 255, 255, 0.1) 100%)`
                           }}
@@ -299,8 +328,23 @@ export const Contact = () => {
                         <motion.div
                           key={tierIndex}
                           initial={{ opacity: 0, y: 10 }}
-                          animate={{ opacity: 1, y: 0 }}
+                          animate={animateTrigger ? {
+                            opacity: 1,
+                            y: 0,
+                            scale: [1, 1.04, 0.98, 1],
+                            borderColor: [
+                              'rgba(255, 255, 255, 0.05)',
+                              'var(--color-accent-purple)',
+                              'rgba(255, 255, 255, 0.05)'
+                            ],
+                            boxShadow: [
+                              '0 0 0 rgba(168, 85, 247, 0)',
+                              '0 0 20px rgba(168, 85, 247, 0.25)',
+                              '0 0 0 rgba(168, 85, 247, 0)'
+                            ]
+                          } : { opacity: 1, y: 0 }}
                           exit={{ opacity: 0, y: -10 }}
+                          transition={animateTrigger ? { duration: 0.6, ease: "easeInOut" } : { duration: 0.2 }}
                           className="mt-16 p-6 rounded-2xl bg-white/5 border border-white/5 relative overflow-hidden"
                         >
                           {/* Special Feature Badge */}
@@ -331,13 +375,18 @@ export const Contact = () => {
 
                           <button 
                             type="button"
-                            className="w-full py-3 bg-white/5 hover:bg-white/10 border border-white/10 text-white text-xs font-bold uppercase tracking-widest rounded-xl transition-all"
+                            onClick={handleSelectPlan}
+                            className={`w-full py-3 text-xs font-bold uppercase tracking-widest rounded-xl transition-all cursor-pointer ${
+                              isButtonPurple 
+                                ? 'bg-accent-purple hover:bg-accent-purple/90 border border-transparent text-white shadow-md shadow-accent-purple/20' 
+                                : 'bg-white/5 hover:bg-white/10 border border-white/10 text-white shadow-none'
+                            }`}
                           >
-                            Select Plan
+                            {isButtonPurple ? 'Select Plan' : 'Selected'}
                           </button>
                         </motion.div>
                       </AnimatePresence>
-                    </div>
+                    </motion.div>
                   </div>
 
                   <div>
@@ -393,7 +442,6 @@ export const Footer = () => {
 
           <div className="flex items-center gap-8">
             <a href="https://www.linkedin.com/in/shashank-nayal-b993953b1/" target="_blank" rel="noopener noreferrer" className="text-text-muted hover:text-accent-purple transition-colors"><Linkedin size={20} /></a>
-            <a href="#" className="text-text-muted hover:text-accent-purple transition-colors"><Twitter size={20} /></a>
           </div>
 
           <div className="text-text-muted text-xs font-mono uppercase tracking-widest hidden md:block">

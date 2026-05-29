@@ -201,8 +201,6 @@ export const Hero = () => {
             <div className="mt-16 flex items-center gap-8">
               {[
                 { icon: Linkedin, href: "https://www.linkedin.com/in/shashank-nayal-b993953b1/" },
-                { icon: Twitter, href: "#" },
-                { icon: Globe, href: "#" },
               ].map((social, idx) => (
                 <a 
                   key={idx} 

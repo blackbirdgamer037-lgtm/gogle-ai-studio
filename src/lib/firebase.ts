@@ -1,10 +1,24 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, signInAnonymously, updateProfile } from 'firebase/auth';
 import { getFirestore, doc, getDocFromServer } from 'firebase/firestore';
-import firebaseConfig from '../../firebase-applet-config.json';
+const cleanEnvVar = (val: string | undefined): string => {
+  if (!val) return '';
+  return val.replace(/^["']|["']$/g, '').trim();
+};
+
+const firebaseConfig = {
+  apiKey: cleanEnvVar(import.meta.env.VITE_FIREBASE_API_KEY),
+  authDomain: cleanEnvVar(import.meta.env.VITE_FIREBASE_AUTH_DOMAIN),
+  projectId: cleanEnvVar(import.meta.env.VITE_FIREBASE_PROJECT_ID),
+  storageBucket: cleanEnvVar(import.meta.env.VITE_FIREBASE_STORAGE_BUCKET),
+  messagingSenderId: cleanEnvVar(import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID),
+  appId: cleanEnvVar(import.meta.env.VITE_FIREBASE_APP_ID),
+  measurementId: cleanEnvVar(import.meta.env.VITE_FIREBASE_MEASUREMENT_ID),
+};
 
 const app = initializeApp(firebaseConfig);
-export const db = getFirestore(app, firebaseConfig.firestoreDatabaseId);
+const dbId = cleanEnvVar(import.meta.env.VITE_FIREBASE_FIRESTORE_DATABASE_ID);
+export const db = getFirestore(app, dbId && dbId !== '(default)' ? dbId : undefined);
 export const auth = getAuth(app);
 
 export const ADMIN_EMAIL = 'shashanknayal4@gmail.com';
@@ -62,7 +76,7 @@ async function testConnection() {
     await getDocFromServer(doc(db, 'test', 'connection'));
   } catch (error) {
     if (error instanceof Error && error.message.includes('the client is offline')) {
-      console.error("Please check your Firebase configuration or internet connection.");
+      console.warn("Firebase is offline or configuration needs verification:", error.message);
     }
   }
 }

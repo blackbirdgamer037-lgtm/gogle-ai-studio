@@ -13,6 +13,8 @@ service cloud.firestore {
 
     function isAdmin() {
       return isSignedIn() && 
+             'email' in request.auth.token &&
+             request.auth.token.email_verified == true &&
              request.auth.token.email.lower() == "shashanknayal4@gmail.com";
     }
 
@@ -88,8 +90,8 @@ service cloud.firestore {
       allow get: if isValidId(reviewId);
       allow list: if true;
       allow create: if isValidId(reviewId) && isSignedIn() && isValidReview(incoming());
-      allow delete: if isValidId(reviewId) && (isAdmin() || (isSignedIn() && resource.data.userId == request.auth.uid));
-      allow update: if isValidId(reviewId) && isSignedIn() && isOwner(resource.data.userId) && isValidReview(incoming()) &&
+      allow delete: if isValidId(reviewId) && (isAdmin() || (isSignedIn() && resource.data.get('userId', '') == request.auth.uid));
+      allow update: if isValidId(reviewId) && isSignedIn() && isOwner(resource.data.get('userId', '')) && isValidReview(incoming()) &&
                     incoming().diff(existing()).affectedKeys().hasOnly(['rating', 'comment', 'createdAt']);
     }
   }
